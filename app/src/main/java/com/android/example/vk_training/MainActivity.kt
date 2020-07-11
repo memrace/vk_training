@@ -2,17 +2,21 @@ package com.android.example.vk_training
 
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.provider.Contacts
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.android.example.vk_training.NetWorking.IJsonVKApi
+import com.android.example.vk_training.NetWorking.NetWork
+import com.android.example.vk_training.NetWorking.data.DataVK
 import com.android.example.vk_training.databinding.ActivityMainBinding
 import com.google.android.material.textfield.TextInputEditText
-import com.android.example.vk_training.NetWorking.NetWork
-import java.io.IOException
-import java.net.URL
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 	private lateinit var inputIdET:TextInputEditText
 	private lateinit var findBT:Button
 	private lateinit var resultTV:TextView
-
+	private val apiVKApi:IJsonVKApi = IJsonVKApi()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -33,17 +37,27 @@ class MainActivity : AppCompatActivity() {
 
 // OnClickListener
 		findBT.setOnClickListener {
-			val generatedURL: URL = NetWork().generateURL(inputIdET.text.toString())
-			var response: String? = null
-			try {
-				response = NetWork().getResponseFromURL(generatedURL)
-			} catch (e:IOException) {
-				e.printStackTrace()
+			val inputText = inputIdET.toString()
+			CoroutineScope(Dispatchers.Main).launch{
+				val userInfo = apiVKApi.getUserInfo(inputText).await()
+				resultTV.text =  userInfo.f_Name
 			}
 
-			resultTV.text = response
+			}
+
+
+
+
+
+
+
+
 		}
 
 
-	}
+
+
+
+
+
 }
