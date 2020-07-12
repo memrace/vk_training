@@ -1,0 +1,7 @@
+<application>
+  <component name="GithubAccounts">
+    <account id="cddb0d28-a299-4d21-8096-9a9af6c7465d" name="memrace">
+      <server useHttp="false" host="github.com" />
+    </account>
+  </component>
+</application>
