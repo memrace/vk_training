@@ -32,18 +32,18 @@ class MainActivity : AppCompatActivity() {
 		findBT = dB.findBT
 		resultTV = dB.resultTV
 
+// IJsonVKAPI
+		val vkApi:IJsonVKApi = IJsonVKApi.instance
 // OnClickListener
 		findBT.setOnClickListener {
+			var inputText = inputIdET.text.toString()
 
-			val inputText = inputIdET.toString()
-
-			GlobalScope.launch(Dispatchers.Default){
-				val apiVKApi = IJsonVKApi.begin()
-				val userInfo = apiVKApi.getUserInfo(inputText).await()
-				resultTV.text = userInfo.f_Name
+			GlobalScope.launch() {
+				val responseVK = vkApi.getUserInfo(inputText).await()
+				resultTV.text = responseVK.response[0].last_name
 			}
 
-			}
+		}
 
 
 
