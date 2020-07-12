@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 			val apiVKApi = IJsonVKApi.begin()
 			val inputText = inputIdET.toString()
 
-			GlobalScope.launch(){
+			GlobalScope.launch(Dispatchers.Default){
 				val userInfo = apiVKApi.getUserInfo(inputText)
 				resultTV.text = userInfo.await().f_Name
 			}
