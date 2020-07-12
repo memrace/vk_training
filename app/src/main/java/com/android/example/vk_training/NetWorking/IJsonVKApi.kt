@@ -6,6 +6,10 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.Call;
+import retrofit2.CallAdapter
+import retrofit2.Callback
+import retrofit2.http.HTTP
 
 // CONSTs
 private const val VK_METHOD: String = "users.get"
@@ -20,16 +24,16 @@ https://api.vk.com/method/users.get?user_ids=123456&access_token=05f4702b05f4702
 
 interface IJsonVKApi {
     @GET(VK_METHOD)
-    fun getUserInfo(
+    fun  getUserInfo(
 
         @Query(PARAM_USER_ID)user_id:String
         //not good
 //        @Query(PARAM_ACCESS_TOKEN) access_token:String = ACCESS_TOKEN,
 //        @Query(PARAM_VERSION)vk_v:String = VK_V
-    ): Deferred<DataVK>
+    ): Call<DataVK>
 
     companion object{
-        operator fun invoke():IJsonVKApi{
+         fun begin():IJsonVKApi{
             val requestInterceptor = Interceptor {
                 chain -> val url  = chain.request()
                     .url()
@@ -43,9 +47,10 @@ interface IJsonVKApi {
                     .build()
                 return@Interceptor chain.proceed(request)
             }
-            val okHttpClient:OkHttpClient = OkHttpClient.Builder().addInterceptor(requestInterceptor)
+            val okHttpClient1:OkHttpClient = OkHttpClient.Builder()
+                .addInterceptor(requestInterceptor)
                 .build()
-            return NetworkService.getRetrofit(okHttpClient).create(IJsonVKApi::class.java)
+             return NetworkService.getRetrofit(okHttpClient1).create(IJsonVKApi::class.java)
         }
     }
 }
