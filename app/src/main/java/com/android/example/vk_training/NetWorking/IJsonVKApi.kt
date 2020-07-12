@@ -27,7 +27,7 @@ interface IJsonVKApi {
     fun  getUserInfo(
 
         @Query(PARAM_USER_ID)user_id:String
-        //not good
+        //not goods
 //        @Query("access_token") access_token:String = ACCESS_TOKEN,
 //        @Query("v")vk_v:String = VK_V
     ): Call<VkResponse>
