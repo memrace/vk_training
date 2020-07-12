@@ -18,10 +18,10 @@ object NetworkService {
 
 
 
-    fun getRetrofit (/*client: OkHttpClient*/):Retrofit {
+    fun getRetrofit (client: OkHttpClient):Retrofit {
 
         mRetrofit =  Retrofit.Builder()
-//            .client(client)
+            .client(client)
             .baseUrl(BASE_URL)
             .addConverterFactory(gsonConverterFactory)
             .build()

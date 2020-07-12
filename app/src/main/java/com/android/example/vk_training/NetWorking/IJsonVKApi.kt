@@ -26,31 +26,31 @@ interface IJsonVKApi {
     @GET(VK_METHOD)
     fun  getUserInfo(
 
-        @Query(PARAM_USER_ID)user_id:String,
+        @Query(PARAM_USER_ID)user_id:String
         //not good
-        @Query("access_token") access_token:String = ACCESS_TOKEN,
-        @Query("v")vk_v:String = VK_V
+//        @Query("access_token") access_token:String = ACCESS_TOKEN,
+//        @Query("v")vk_v:String = VK_V
     ): Call<VkResponse>
 
     companion object{
         val instance: IJsonVKApi by lazy {
-//            val requestInterceptor = Interceptor {
-//                    chain -> val url  = chain.request()
-//                .url()
-//                .newBuilder()
-//                .addQueryParameter("access_token", ACCESS_TOKEN)
-//                .addQueryParameter("v", VK_V)
-//                .build()
-//                val request  = chain.request()
-//                    .newBuilder()
-//                    .url(url)
-//                    .build()
-//                return@Interceptor chain.proceed(request)
-//            }
-//            val okHttpClient1:OkHttpClient = OkHttpClient.Builder()
-//                .addInterceptor(requestInterceptor)
-//                .build()
-            NetworkService.getRetrofit().create<IJsonVKApi>(IJsonVKApi::class.java)
+            val requestInterceptor = Interceptor {
+                    chain -> val url  = chain.request()
+                .url()
+                .newBuilder()
+                .addQueryParameter("access_token", ACCESS_TOKEN)
+                .addQueryParameter("v", VK_V)
+                .build()
+                val request  = chain.request()
+                    .newBuilder()
+                    .url(url)
+                    .build()
+                return@Interceptor chain.proceed(request)
+            }
+            val okHttpClient1:OkHttpClient = OkHttpClient.Builder()
+                .addInterceptor(requestInterceptor)
+                .build()
+            NetworkService.getRetrofit(okHttpClient1).create<IJsonVKApi>(IJsonVKApi::class.java)
         }
 
     }
