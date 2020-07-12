@@ -34,12 +34,13 @@ class MainActivity : AppCompatActivity() {
 
 // OnClickListener
 		findBT.setOnClickListener {
-			val apiVKApi = IJsonVKApi.begin()
+
 			val inputText = inputIdET.toString()
 
 			GlobalScope.launch(Dispatchers.Default){
-				val userInfo = apiVKApi.getUserInfo(inputText)
-				resultTV.text = userInfo.await().f_Name
+				val apiVKApi = IJsonVKApi.begin()
+				val userInfo = apiVKApi.getUserInfo(inputText).await()
+				resultTV.text = userInfo.f_Name
 			}
 
 			}

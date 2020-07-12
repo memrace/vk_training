@@ -12,9 +12,9 @@ import retrofit2.Callback
 import retrofit2.http.HTTP
 
 // CONSTs
-private const val VK_METHOD: String = "users.get"
+private const val VK_METHOD: String = "users.get?"
 private const val VK_V: String = "5.89"
-private const val PARAM_USER_ID = "user_ids"
+private const val PARAM_USER_ID = "user_ids="
 private const val ACCESS_TOKEN = "05f4702b05f4702b05f4702be9058688e7005f405f4702b5af329a100239dcfd975678b"
 
 
